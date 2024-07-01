@@ -1,0 +1,575 @@
+/* Estilos generales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Playfair Display', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f2f2f2;
+    /*color: #333;*/
+}
+
+/* Estilos navegacion */
+#topnav {
+    background-color: #0073e6;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.navItems {
+    padding: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.navItems a {
+    color: white;
+    text-decoration: none;
+    padding-right: 5px;
+}
+
+.navItems:hover {
+    background-color: #005bb5;
+}
+
+.caret-down {
+    width: 10px;
+    float: right;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+
+/* Estilos dropdown */
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #0073e6;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.show {
+    display: block;
+}
+.dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #005bb5;
+}
+
+.navItems:hover .dropdown-content {
+    display: block;
+}
+
+#area-users:hover .dropdown-content {
+    display: block;
+    background-color: #0073e6;
+    border: solid white 1px;
+}
+
+#area-users a:visited {
+    color: white;
+}
+
+/* Estilos header */
+
+#mainheader {
+    background-color: #0073e6;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    border-bottom: solid white 3px;
+}
+
+#areas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+#area-logo img {
+    width: 100%;
+    max-width: 236px;
+}
+
+#area-search form {
+    display: flex;
+    align-items: center;
+}
+
+#searchinput {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+#btnsub {
+    padding: 0.5rem 1rem;
+    background-color: #005bb5;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+#area-items {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    /* flex: 1; */
+}
+
+#btnsub {
+    padding: 0.5rem 1rem;
+    background-color: #005bb5;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+#area-items {
+    display: flex;
+    align-items: center;
+}
+
+#area-redes {
+    display: flex;
+    align-items: center;
+}
+
+.info {
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.btn-redes img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+#area-users img, #area-cart img {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+/* Estilos del formulario de inicio de sesión */
+.reg-form {
+    max-width: 500px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reg-form h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Estilos imagen index */
+
+.setup-img {
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+/* Estilos categorías destacadas */
+
+.row {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: center;
+    padding: 1rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+}
+
+.column {
+    float: left;
+    width: 25%;
+    padding: 0;
+    background-color: white;
+}
+
+.card {
+    display: block;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    padding: 2rem;
+    outline: 1px solid #eae6e6;
+    overflow: hidden;
+}
+
+.card a i {
+    font-size: 2rem;
+}
+
+.card-text {
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+}
+
+.header-cat {
+    margin: 1rem auto;
+}
+
+/*Estilos marcas*/
+
+.column-marcas {
+    float: left;
+    width: 20%;
+    padding: 0;
+    background-color: white;
+}
+
+/* Estilos formulario index */
+
+#header-cform {
+    text-align: center;
+    margin: 1rem;
+}
+
+.container {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: center;
+    padding-bottom: 1rem;
+    border-radius: 5px;
+}
+
+#contact-form {
+    background-color: #e7e7e7;
+    width: 80%;
+    display: grid;
+    row-gap: 10px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+#name, #email {
+    box-sizing: border-box;
+    width: 60%;
+    height: 40px;
+}
+
+#name, #email, #message {
+    border: 2px solid #b7b6b6;
+}
+
+#message {
+    box-sizing: border-box;
+    resize: none;
+    width: 100%;
+    height: 150px;
+}
+
+input[type='submit'] {
+    width: 30%;
+    height: 45px;
+    cursor: pointer;
+}
+
+/*Estilos lista de productos*/
+
+#col-container {
+    display: flex;
+    justify-content: center;
+}
+
+#prod-container-grid {
+    float: right;
+    width: 85%;
+    padding: 2rem 2rem 2rem;
+    flex-wrap: wrap;
+}
+
+#prod-grid {
+    padding: 1rem 0 1rem 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    row-gap: 2rem;
+}
+
+/*Estilos cartas productos*/
+
+.prod-img {
+    width: 100%;
+}
+
+.prod-card-title {
+    margin: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prod-card-price {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.prod-vermas {
+    background-color: #0073e6;
+    color: white;
+    font-size: 16px;
+    margin: 10px 10px;
+    padding: 1rem 0;
+    border: none;
+    width: 60%;
+}
+
+.prod-vermas:hover {
+    background-color: #005bb5;
+    cursor: pointer;
+}
+
+.prod-card {
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+}
+
+/*Estilos columna categorias*/
+
+#cat-column {
+    width: 15%;
+    float: left;
+    display: inline-block;
+    background-color: #d7d7d7;
+    justify-content: center;
+    padding: 1rem 1rem;
+    margin-right: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cat-marcas-container, .row-columnas {
+    padding: 10px 0;
+}
+
+.headers-columnas {
+    padding: 10px 0;
+}
+
+.cat-header-link {
+    text-decoration: none;
+}
+
+.cat-header-link:visited {
+    color: black;
+}
+
+.lista-marcas-li {
+    padding-left: 15px;
+    padding-bottom: 10px;
+    list-style: none;
+}
+
+.cat-links {
+    text-decoration: none;
+}
+
+.cat-links:visited {
+    color: #333333;
+}
+
+.cat-links:hover {
+
+}
+
+
+/* Estilos específicos para los formularios */
+.reg-form p {
+    margin-bottom: 1rem;
+}
+
+.reg-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.text-input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.remember input {
+    margin-right: 0.5rem;
+}
+
+.sign-in-btn {
+    text-align: center;
+}
+
+.button-primary {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #0073e6;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.button-primary:hover {
+    background-color: #005bb5;
+}
+
+.sign_in_links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.sign_in_links .note {
+    font-size: 0.875rem;
+}
+
+.sign_in_links a {
+    color: #0073e6;
+    text-decoration: none;
+}
+
+.sign_in_links a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos footer */
+footer {
+    background-color: #0073e6;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: auto;
+}
+
+footer section {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Media Queries */
+
+@media (max-width: 1024px) {
+
+}
+
+@media (max-width: 768px) {
+    #topnav {
+        flex-direction: column;
+    }
+
+    #areas {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #row {
+        flex-direction: column;
+    }
+
+    #area-items {
+        margin-top: 1rem;
+    }
+
+    #contactForm {
+        flex-direction: column;
+    }
+
+    #cat-column {
+
+    }
+
+    .cat-marcas-container, .row-columnas {
+        padding: 10px 0;
+    }
+
+    .headers-columnas {
+
+    }
+
+    .cat-header-link {
+
+    }
+
+    .lista-marcas-li {
+
+    }
+
+    #col-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    #prod-container-grid {
+        float: right;
+        width: 85%;
+        padding: 2rem 2rem 2rem;
+        flex-wrap: wrap;
+    }
+
+    #prod-grid {
+        padding: 1rem 0 1rem 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        row-gap: 2rem;
+    }
+
+
+
+}
+
+@media (max-width: 480px) {
+    footer p {
+        font-size: 0.8rem;
+    }
+}

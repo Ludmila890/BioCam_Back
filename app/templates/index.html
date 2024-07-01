@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+    <h1>Clientes</h1>
+    <ul>
+        {% for cliente in clientes %}
+        <li>{{ cliente[1] }} - {{ cliente[2] }}</li> <!-- Asumiendo que el nombre está en la columna 1 y el correo en la columna 2 -->
+        {% endfor %}
+    </ul>
+</body>
+</html>

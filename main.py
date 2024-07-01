@@ -1,0 +1,1 @@
+#fundamento y creacion de las funciones que mas adelante van a ser paquetes por que pasa esto porque tengo mas de dos modulos

@@ -15,12 +15,20 @@ document.addEventListener("DOMContentLoaded", function() {
             <input type="text" id="usernameRegister" name="usernameRegister" required>
         </p>
         <p>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="correo">Email:</label>
+            <input type="email" id="correo" name="correo" required>
         </p>
         <p>
             <label for="passwordRegister">Contraseña:</label>
             <input type="password" id="passwordRegister" name="passwordRegister" required>
+        </p>
+        <p>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" name="telefono">
+        </p>
+        <p>
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion">
         </p>
         <p>
             <label for="termsCheckbox">
@@ -38,8 +46,10 @@ document.addEventListener("DOMContentLoaded", function() {
         event.preventDefault();
 
         const username = document.getElementById("usernameRegister").value;
-        const email = document.getElementById("email").value;
+        const correo = document.getElementById("correo").value;
         const password = document.getElementById("passwordRegister").value;
+        const telefono = document.getElementById("telefono").value;
+        const direccion = document.getElementById("direccion").value;
 
         // Verificar si el checkbox está marcado
         const termsCheckbox = document.getElementById("termsCheckbox");
@@ -49,22 +59,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const formData = {
-            username: username,
-            email: email,
-            password: password
+            nombre: username,
+            correo: correo,
+            clave: password,
+            telefono: telefono,
+            direccion: direccion
         };
 
-        // Simulando una respuesta de API
-        setTimeout(() => {
-            console.log("Usuario registrado correctamente:", formData);
-            alert("Usuario registrado correctamente");
-            registerForm.reset();
-            registerContainer.style.display = "none"; // Ocultar el formulario de registro después del registro
-        }, 1000);
-
-        /*
-        // Código para enviar datos a una API real
-        fetch("URL_DEL_API", {
+        fetch("http://127.0.0.1:5000/api/clientes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -79,12 +81,13 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(data => {
             console.log("Usuario registrado correctamente:", data);
+            alert("Usuario registrado correctamente");
             registerForm.reset();
             registerContainer.style.display = "none"; // Ocultar el formulario de registro después del registro
         })
         .catch(error => {
             console.error("Error:", error);
+            alert("Hubo un error al registrar el usuario. Por favor, inténtalo de nuevo.");
         });
-        */
     });
 });

@@ -1,16 +1,35 @@
-from flask import jsonify, request
+from flask import jsonify, request, send_from_directory
 from . import app, db
 from .models import Cliente, Componente, Carrito, CarritoItem
 from sqlalchemy.exc import IntegrityError
 
-@app.route('/')
-def index():
-    return "¡Bienvenido a BioCam API!"
+
+@app.route('/login')
+def login():
+    return send_from_directory('../frontend/sitio', 'login.html')
+
+
+@app.route('/css/<path:filename>')
+def css(filename):
+    return send_from_directory('../frontend/css', filename)
+
+
+@app.route('/img/<path:filename>')
+def img(filename):
+    return send_from_directory('../frontend/img', filename)
+
+
+@app.route('/js/<path:filename>')
+def js(filename):
+    return send_from_directory('../frontend/js', filename)
+
+
 # Rutas para Clientes
 @app.route('/api/clientes', methods=['GET'])
 def obtener_clientes():
     clientes = Cliente.query.all()
     return jsonify([cliente.to_dict() for cliente in clientes])
+
 
 @app.route('/api/clientes', methods=['POST'])
 def agregar_cliente():
@@ -42,10 +61,12 @@ def agregar_cliente():
         db.session.rollback()
         return jsonify({'message': f'Error al agregar cliente: {str(e)}'}), 500
 
+
 @app.route('/api/clientes/<int:id>', methods=['GET'])
 def obtener_cliente(id):
     cliente = Cliente.query.get_or_404(id)
     return jsonify(cliente.to_dict())
+
 
 @app.route('/api/clientes/<int:id>', methods=['PUT'])
 def actualizar_cliente(id):
@@ -72,6 +93,7 @@ def actualizar_cliente(id):
         db.session.rollback()
         return jsonify({'mensaje': 'Error de integridad: ' + str(e)}), 500
 
+
 @app.route('/api/clientes/<int:id>', methods=['DELETE'])
 def eliminar_cliente(id):
     cliente = Cliente.query.get(id)
@@ -82,11 +104,13 @@ def eliminar_cliente(id):
     db.session.commit()
     return jsonify({'mensaje': 'Cliente eliminado correctamente'})
 
+
 # Rutas para Componentes
 @app.route('/api/componentes', methods=['GET'])
 def obtener_componentes():
     componentes = Componente.query.all()
     return jsonify([componente.to_dict() for componente in componentes])
+
 
 @app.route('/api/componentes', methods=['POST'])
 def agregar_componente():
@@ -102,10 +126,12 @@ def agregar_componente():
     db.session.commit()
     return jsonify({'message': 'Componente agregado con éxito!'}), 201
 
+
 @app.route('/api/componentes/<int:id>', methods=['GET'])
 def obtener_componente(id):
     componente = Componente.query.get_or_404(id)
     return jsonify(componente.to_dict())
+
 
 @app.route('/api/componentes/<int:id>', methods=['PUT'])
 def actualizar_componente(id):
@@ -127,6 +153,7 @@ def actualizar_componente(id):
         db.session.rollback()
         return jsonify({'mensaje': 'Error de integridad: ' + str(e)}), 500
 
+
 @app.route('/api/componentes/<int:id>', methods=['DELETE'])
 def eliminar_componente(id):
     componente = Componente.query.get(id)
@@ -137,11 +164,13 @@ def eliminar_componente(id):
     db.session.commit()
     return jsonify({'mensaje': 'Componente eliminado correctamente'})
 
+
 # Rutas para Carritos
 @app.route('/api/carritos', methods=['GET'])
 def obtener_carritos():
     carritos = Carrito.query.all()
     return jsonify([carrito.to_dict() for carrito in carritos])
+
 
 @app.route('/api/carritos', methods=['POST'])
 def agregar_carrito():
@@ -153,10 +182,12 @@ def agregar_carrito():
     db.session.commit()
     return jsonify({'message': 'Carrito agregado con éxito!'}), 201
 
+
 @app.route('/api/carritos/<int:id>', methods=['GET'])
 def obtener_carrito(id):
     carrito = Carrito.query.get_or_404(id)
     return jsonify(carrito.to_dict())
+
 
 @app.route('/api/carritos/<int:id>', methods=['PUT'])
 def actualizar_carrito(id):
@@ -174,6 +205,7 @@ def actualizar_carrito(id):
     except IntegrityError as e:
         db.session.rollback()
         return jsonify({'mensaje': 'Error de integridad: ' + str(e)}), 500
+
 
 @app.route('/api/carritos/<int:id>', methods=['DELETE'])
 def eliminar_carrito(id):

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Mi Sitio Web</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          rel="stylesheet">
+    <style>
+        .reg-form {
+            display: none;
+        }
+
+        .reg-form.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<header id="mainheader">
+    <div id="areas">
+        <div id="area-logo">
+            <a href="">
+                <img src="/img/biocam_logo.png" alt="" width="236" height="42">
+            </a>
+        </div>
+        <div id="area-search">
+            <form action="">
+                <input type="text" name="searchinput" id="searchinput" placeholder="Búsqueda">
+                <button type="submit" id="btnsub">Buscar</button>
+            </form>
+        </div>
+        <div id="area-items">
+            <div id="area-redes">
+                <div class="info">Nuestras redes</div>
+                <div class="btn-redes">
+                    <a href="">
+                        <img src="/img/icn-nav-whatsapp.png" alt="">
+                    </a>
+                </div>
+                <div class="btn-redes">
+                    <a href="">
+                        <img src="/img/icn-nav-twitter.png" alt="">
+                    </a>
+                </div>
+                <div class="btn-redes">
+                    <a href="">
+                        <img src="/img/icn-nav-facebook.png" alt="">
+                    </a>
+                </div>
+                <div class="btn-redes">
+                    <a href="">
+                        <img src="/img/icn-nav-instagram.png" alt="">
+                    </a>
+                </div>
+                <div class="btn-redes">
+                    <a href="">
+                        <img src="/img/icn-nav-youtube.png" alt="">
+                    </a>
+                </div>
+                <div class="btn-sep">
+                    <img src="/img/icn-nav-separador.png" alt="">
+                </div>
+            </div>
+            <div id="area-users">
+                <a href="">
+                    <img src="/img/icn-nav-user.png" alt="">
+                </a>
+            </div>
+            <div id="area-cart">
+                <a href="">
+                    <img src="/img/icn-nav-cart.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav id="topnav">
+</nav>
+<main>
+    <div class="container">
+        <fieldset class="reg-form active" id="loginContainer">
+            <div class="brand-mark"></div>
+            <h2>Iniciar sesión</h2>
+
+            <form id="loginForm">
+                <p>
+                    <label for="user_account_login">Tu correo electrónico:</label>
+                    <input class="text-input" id="user_account_login" name="user_account[login]" type="text">
+                </p>
+
+                <p>
+                    <label for="user_account_password">Tu contraseña:</label>
+                    <input class="text-input" id="user_account_password" name="user_account[password]" type="password">
+                </p>
+
+                <div class="remember">
+                    <input name="user_account[remember_me]" type="hidden" value="0">
+                    <input checked="checked" id="user_account_remember_me" name="user_account[remember_me]"
+                           type="checkbox" value="1">
+                    <label for="user_account_remember_me">Mantenerme conectado en esta computadora</label>
+                </div>
+
+                <p class="sign-in-btn">
+                    <input class="button-primary" name="commit" type="submit" value="Iniciar sesión">
+                </p>
+
+                <div class="sign_in_links">
+                    <span class="note forgot">¿No tienes una cuenta? <a id="registerLink"
+                                                                        href="#">Inscribirse</a></span>
+                    <span class="note forgot" style="text-align: right;">Ayuda: <a class="link-signup"
+                                                                                   href="/forgot_password">Olvidé mi contraseña</a></span>
+                </div>
+            </form>
+        </fieldset>
+
+        <fieldset class="reg-form" id="registerContainer">
+            <div class="brand-mark"></div>
+            <h2>Registro</h2>
+        </fieldset>
+
+    </div>
+</main>
+
+<footer>
+    <section>
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+    </section>
+</footer>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const loginContainer = document.getElementById('loginContainer');
+		const registerContainer = document.getElementById('registerContainer');
+		const registerLink = document.getElementById('registerLink');
+
+		registerLink.addEventListener('click', function (e) {
+			e.preventDefault();
+			loginContainer.classList.remove('active');
+			registerContainer.classList.add('active');
+		});
+	});
+</script>
+<script type="module" src="/js/navCategories.js" defer></script>
+<script src="/js/login.js" defer></script>
+<script src="/js/register.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+POST http://127.0.0.1:5000/api/clientes
+Content-Type: application/json
+
+{"nombre": "carlitos",
+"correo": "carlitos@carlitos.com",
+"clave": "carlitos123",
+"telefono": "0303456",
+"direccion": "por ahi 123"}

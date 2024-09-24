@@ -1,6 +1,7 @@
 from datetime import datetime
 from . import db
 
+
 class Cliente(db.Model):
     __tablename__ = 'Clientes'
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +24,7 @@ class Cliente(db.Model):
             'fecha_creacion': self.fecha_creacion,
             'ultima_actividad': self.ultima_actividad
         }
+
 
 class Componente(db.Model):
     __tablename__ = 'Componentes'
@@ -47,6 +49,7 @@ class Componente(db.Model):
             'fecha_actualizacion': self.fecha_actualizacion
         }
 
+
 class Carrito(db.Model):
     __tablename__ = 'Carritos'
     id = db.Column(db.Integer, primary_key=True)
@@ -64,6 +67,7 @@ class Carrito(db.Model):
             'fecha_actualizacion': self.fecha_actualizacion,
             'estado': self.estado
         }
+
 
 class CarritoItem(db.Model):
     __tablename__ = 'Carrito_Items'

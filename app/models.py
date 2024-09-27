@@ -54,7 +54,7 @@ class Componente(db.Model):
         }
 
 
-class Status(Enum):
+class Estado(Enum):
     ABIERTO = 'abierto'
     CERRADO = 'cerrado'
     VACIO = 'vacio'
@@ -66,7 +66,7 @@ class Carrito(db.Model):
     cliente_id: Mapped[int] = Column(Integer, db.ForeignKey('Clientes.id'), nullable=False)
     fecha_creacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
     fecha_actualizacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    estado: Mapped[Status] = Column(db.Enum(Status), default=Status.ABIERTO)
+    estado: Mapped[Estado] = Column(db.Enum(Estado), default=Estado.ABIERTO)
     cliente = db.relationship('Cliente', backref=db.backref('carritos', lazy=True))
 
     def to_dict(self):

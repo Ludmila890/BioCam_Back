@@ -1,17 +1,21 @@
 from datetime import datetime
 from . import db
+from sqlalchemy.orm import Mapped
+from sqlalchemy import Column, Integer, String
+from decimal import Decimal
+from enum import Enum
 
 
 class Cliente(db.Model):
     __tablename__ = 'Clientes'
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    correo = db.Column(db.String(100), nullable=False, unique=True)
-    clave = db.Column(db.String(255), nullable=False)
-    telefono = db.Column(db.String(20))
-    direccion = db.Column(db.String(255))
-    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
-    ultima_actividad = db.Column(db.DateTime, nullable=True)
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    nombre: Mapped[str] = Column(String(100), nullable=False)
+    correo: Mapped[str] = Column(String(100), nullable=False, unique=True)
+    clave: Mapped[str] = Column(String(255), nullable=False)
+    telefono: Mapped[str] = Column(String(20))
+    direccion: Mapped[str] = Column(String(255))
+    fecha_creacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
+    ultima_actividad: Mapped[datetime] = Column(db.DateTime, nullable=True)
 
     def to_dict(self):
         return {
@@ -28,14 +32,14 @@ class Cliente(db.Model):
 
 class Componente(db.Model):
     __tablename__ = 'Componentes'
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    descripcion = db.Column(db.Text)
-    precio = db.Column(db.Numeric(10, 2), nullable=False)
-    stock = db.Column(db.Integer, nullable=False)
-    categoria = db.Column(db.String(50))
-    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
-    fecha_actualizacion = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    nombre: Mapped[str] = Column(String(100), nullable=False)
+    descripcion: Mapped[str] = Column(db.Text)
+    precio: Mapped[Decimal] = Column(db.Numeric(10, 2), nullable=False)
+    stock: Mapped[int] = Column(Integer, nullable=False)
+    categoria: Mapped[str] = Column(String(50))
+    fecha_creacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
+    fecha_actualizacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def to_dict(self):
         return {
@@ -50,13 +54,19 @@ class Componente(db.Model):
         }
 
 
+class Status(Enum):
+    ABIERTO = 'abierto'
+    CERRADO = 'cerrado'
+    VACIO = 'vacio'
+
+
 class Carrito(db.Model):
     __tablename__ = 'Carritos'
-    id = db.Column(db.Integer, primary_key=True)
-    cliente_id = db.Column(db.Integer, db.ForeignKey('Clientes.id'), nullable=False)
-    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
-    fecha_actualizacion = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    estado = db.Column(db.Enum('abierto', 'cerrado'), default='abierto')
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    cliente_id: Mapped[int] = Column(Integer, db.ForeignKey('Clientes.id'), nullable=False)
+    fecha_creacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
+    fecha_actualizacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    estado: Mapped[Status] = Column(db.Enum(Status), default=Status.ABIERTO)
     cliente = db.relationship('Cliente', backref=db.backref('carritos', lazy=True))
 
     def to_dict(self):
@@ -71,11 +81,11 @@ class Carrito(db.Model):
 
 class CarritoItem(db.Model):
     __tablename__ = 'Carrito_Items'
-    id = db.Column(db.Integer, primary_key=True)
-    carrito_id = db.Column(db.Integer, db.ForeignKey('Carritos.id'), nullable=False)
-    componente_id = db.Column(db.Integer, db.ForeignKey('Componentes.id'), nullable=False)
-    cantidad = db.Column(db.Integer, nullable=False)
-    fecha_agregado = db.Column(db.DateTime, default=datetime.utcnow)
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    carrito_id: Mapped[int] = Column(Integer, db.ForeignKey('Carritos.id'), nullable=False)
+    componente_id: Mapped[int] = Column(Integer, db.ForeignKey('Componentes.id'), nullable=False)
+    cantidad: Mapped[int] = Column(Integer, nullable=False)
+    fecha_agregado: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
     carrito = db.relationship('Carrito', backref=db.backref('items', lazy=True))
     componente = db.relationship('Componente', backref=db.backref('carrito_items', lazy=True))
 

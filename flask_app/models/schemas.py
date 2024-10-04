@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
-from pydantic import BaseModel
-from app.models import Estado
+from pydantic import BaseModel, ConfigDict
+from models.models import Estado
 
 
 # schemas cliente
@@ -18,7 +18,6 @@ class ClienteBase(BaseModel):
 
 class CrearCliente(ClienteBase):
     id: int | None
-    fecha_creacion: datetime
 
 
 class ActualizarCliente(BaseModel):
@@ -36,6 +35,8 @@ class GetCliente(BaseModel):
     correo: str | None
     telefono: str | None
     direccion: str | None
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 # schemas componentes

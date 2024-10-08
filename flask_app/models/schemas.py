@@ -8,7 +8,7 @@ from models.models import Estado
 class ClienteBase(BaseModel):
     id: int
     nombre: str
-    correo: str
+    email: str
     clave: str
     telefono: str | None
     direccion: str | None
@@ -16,13 +16,15 @@ class ClienteBase(BaseModel):
     ultima_actividad: datetime | None
 
 
-class CrearCliente(ClienteBase):
-    id: int | None
+class CrearCliente(BaseModel):
+    nombre: str
+    email: str
+    clave: str
 
 
 class ActualizarCliente(BaseModel):
     nombre: str | None
-    correo: str | None
+    email: str | None
     clave: str | None
     telefono: str | None
     direccion: str | None
@@ -32,7 +34,7 @@ class ActualizarCliente(BaseModel):
 class GetCliente(BaseModel):
     id: int | None
     nombre: str | None
-    correo: str | None
+    email: str | None
     telefono: str | None
     direccion: str | None
 

@@ -1,12 +1,16 @@
 from models import models
 from sqlalchemy.orm import Session
 from flask_app.utils.utils import hash_password
+from flask_app.models.schemas import GetCliente
 
 
-def get_clientes(session: Session, skip: int = 0, limit: int = 100) -> list[type(models.Cliente)]:
-    result = session.query(models.Cliente).offset(skip).limit(limit).all()
+def get_clientes(session: Session, skip: int = 0, limit: int = 100) -> dict:
+    clientes = session.query(models.Cliente).offset(skip).limit(limit).all()
 
-    return result
+    for cliente in clientes:
+        cliente_serializado = GetCliente.model_validate(cliente).model_dump()
+
+        return cliente_serializado
 
 
 def get_cliente_por_email(session: Session, email: str) -> models.Cliente:
@@ -27,10 +31,9 @@ def get_cliente_por_id(session: Session, id: int) -> models.Cliente:
     return result
 
 
-def crear_cliente(session: Session, nombre: str, correo: str, clave: str):
-
+def crear_cliente(session: Session, nombre: str, email: str, clave: str):
     password = hash_password(clave)
-    nuevo_cliente = models.Cliente(nombre=nombre, correo=correo, clave=password)
+    nuevo_cliente = models.Cliente(nombre=nombre, email=email, clave=password)
 
     session.add(nuevo_cliente)
     session.commit()

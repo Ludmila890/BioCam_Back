@@ -23,12 +23,13 @@ class CrearCliente(BaseModel):
 
 
 class ActualizarCliente(BaseModel):
-    nombre: str | None
-    email: str | None
-    clave: str | None
-    telefono: str | None
-    direccion: str | None
-    ultima_actividad: datetime | None
+    nombre: str | None = None
+    email: str | None = None
+    clave: str | None = None
+    telefono: str | None = None
+    direccion: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class GetCliente(BaseModel):

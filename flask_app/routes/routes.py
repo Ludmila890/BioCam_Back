@@ -1,12 +1,11 @@
-from flask import request
+from flask import request, jsonify
 from flask_app.models.session import db
 from flask_app.controllers import crud
-from flask_app.models.schemas import CrearCliente
+from flask_app.models import schemas
 
 
 # Rutas para Clientes
 def obtener_clientes():
-
     db_session = db.session
     clientes = crud.get_clientes(db_session)
 
@@ -14,44 +13,23 @@ def obtener_clientes():
 
 
 def agregar_cliente():
-    data = CrearCliente(**request.json)
+    data = schemas.CrearCliente(**request.json)
     db_session = db.session
     nuevo_cliente = crud.crear_cliente(db_session, data.nombre, data.email, data.clave)
 
 
+def obtener_cliente(id: int):
+    db_session = db.session
+    cliente = crud.get_cliente_por_id(db_session, id)
+    return cliente
 
-# @app.route('/api/clientes/<int:id>', methods=['GET'])
-# def obtener_cliente(id):
-#     cliente = Cliente.query.get_or_404(id)
-#     return jsonify(cliente.to_dict())
-#
-#
-# @app.route('/api/clientes/<int:id>', methods=['PUT'])
-# def actualizar_cliente(id):
-#     cliente = Cliente.query.get(id)
-#     if cliente is None:
-#         return jsonify({'mensaje': 'Cliente no encontrado'}), 404
-#
-#     datos = request.get_json()
-#     nuevo_correo = datos.get('correo')
-#
-#     if Cliente.query.filter(Cliente.correo == nuevo_correo, Cliente.id != id).first():
-#         return jsonify({'mensaje': 'El correo ya está en uso por otro cliente'}), 400
-#
-#     cliente.nombre = datos.get('nombre', cliente.nombre)
-#     cliente.correo = datos.get('correo', cliente.correo)
-#     cliente.clave = datos.get('clave', cliente.clave)
-#     cliente.telefono = datos.get('telefono', cliente.telefono)
-#     cliente.direccion = datos.get('direccion', cliente.direccion)
-#
-#     try:
-#         db.session.commit()
-#         return jsonify({'mensaje': 'Cliente actualizado correctamente'})
-#     except IntegrityError as e:
-#         db.session.rollback()
-#         return jsonify({'mensaje': 'Error de integridad: ' + str(e)}), 500
-#
-#
+
+def actualizar_cliente(id: int):
+    data = schemas.ActualizarCliente(**request.json)
+    db_session = db.session
+    cliente_actualizado = crud.actualizar_cliente(db_session, id, data.model_dump(exclude_defaults=True))
+
+
 # @app.route('/api/clientes/<int:id>', methods=['DELETE'])
 # def eliminar_cliente(id):
 #     cliente = Cliente.query.get(id)

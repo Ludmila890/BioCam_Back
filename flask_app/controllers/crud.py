@@ -25,8 +25,9 @@ def get_cliente_por_nombre(session: Session, nombre: str) -> models.Cliente:
     return result
 
 
-def get_cliente_por_id(session: Session, id: int) -> models.Cliente:
-    result = session.query(models.Cliente).filter(models.Cliente.id == id).first()
+def get_cliente_por_id(session: Session, id: int) -> dict:
+    cliente = session.query(models.Cliente).filter(models.Cliente.id == id).first()
+    result = GetCliente.model_validate(cliente).model_dump()
 
     return result
 
@@ -40,6 +41,19 @@ def crear_cliente(session: Session, nombre: str, email: str, clave: str):
     session.refresh(nuevo_cliente)
 
     return nuevo_cliente
+
+
+def actualizar_cliente(session: Session, id: int, data: dict):
+    cliente = session.query(models.Cliente).filter(models.Cliente.id == id).first()
+
+    for key, value in data.items():
+        if hasattr(cliente, key):
+            setattr(cliente, key, value)
+
+    session.commit()
+    session.refresh(cliente)
+
+    return cliente
 
 
 def get_componentes(session: Session, skip: int = 0, limit: int = 100) -> list[type(models.Componente)]:

@@ -52,66 +52,7 @@ def eliminar_cliente(id: int):
 
     return 'cliente eliminado con éxito'
 
-# # Rutas para Componentes
-# @app.route('/api/componentes', methods=['GET'])
-# def obtener_componentes():
-#     componentes = Componente.query.all()
-#     return jsonify([componente.to_dict() for componente in componentes])
-#
-#
-# @app.route('/api/componentes', methods=['POST'])
-# def agregar_componente():
-#     data = request.get_json()
-#     nuevo_componente = Componente(
-#         nombre=data['nombre'],
-#         descripcion=data.get('descripcion'),
-#         precio=data['precio'],
-#         stock=data['stock'],
-#         categoria=data.get('categoria')
-#     )
-#     db.session.add(nuevo_componente)
-#     db.session.commit()
-#     return jsonify({'message': 'Componente agregado con éxito!'}), 201
-#
-#
-# @app.route('/api/componentes/<int:id>', methods=['GET'])
-# def obtener_componente(id):
-#     componente = Componente.query.get_or_404(id)
-#     return jsonify(componente.to_dict())
-#
-#
-# @app.route('/api/componentes/<int:id>', methods=['PUT'])
-# def actualizar_componente(id):
-#     componente = Componente.query.get(id)
-#     if componente is None:
-#         return jsonify({'mensaje': 'Componente no encontrado'}), 404
-#
-#     datos = request.get_json()
-#     componente.nombre = datos.get('nombre', componente.nombre)
-#     componente.descripcion = datos.get('descripcion', componente.descripcion)
-#     componente.precio = datos.get('precio', componente.precio)
-#     componente.stock = datos.get('stock', componente.stock)
-#     componente.categoria = datos.get('categoria', componente.categoria)
-#
-#     try:
-#         db.session.commit()
-#         return jsonify({'mensaje': 'Componente actualizado correctamente'})
-#     except IntegrityError as e:
-#         db.session.rollback()
-#         return jsonify({'mensaje': 'Error de integridad: ' + str(e)}), 500
-#
-#
-# @app.route('/api/componentes/<int:id>', methods=['DELETE'])
-# def eliminar_componente(id):
-#     componente = Componente.query.get(id)
-#     if componente is None:
-#         return jsonify({'mensaje': 'Componente no encontrado'}), 404
-#
-#     db.session.delete(componente)
-#     db.session.commit()
-#     return jsonify({'mensaje': 'Componente eliminado correctamente'})
-#
-#
+
 # # Rutas para Carritos
 # @app.route('/api/carritos', methods=['GET'])
 # def obtener_carritos():

@@ -56,17 +56,21 @@ class ComponenteBase(BaseModel):
     fecha_actualizacion: datetime | None
 
 
-class CrearComponente(ComponenteBase):
-    id: int | None
+class CrearComponente(BaseModel):
+    nombre: str
+    descripcion: str | None = None
+    precio: Decimal
+    stock: int
+    categoria: str
 
 
 class ActualizarComponente(BaseModel):
-    nombre: str | None
-    descripcion: str | None
-    precio: Decimal | None
-    stock: int | None
-    categoria: str | None
-    fecha_actualizacion: datetime
+    nombre: str | None = None
+    descripcion: str | None = None
+    precio: Decimal | None = None
+    stock: int | None = None
+    categoria: str | None = None
+    fecha_actualizacion: datetime | None = None
 
 
 class GetComponente(BaseModel):

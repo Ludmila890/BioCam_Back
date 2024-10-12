@@ -5,6 +5,8 @@ from flask_app.models.session import db
 from flask_app.routes.routes import obtener_clientes, agregar_cliente, obtener_cliente, actualizar_cliente, \
     eliminar_cliente
 
+from flask_app.routes.routes_componentes import obtener_componentes, agregar_componente
+
 app = Flask(__name__, static_folder='frontend/static')
 
 # clientes GET routes
@@ -17,6 +19,12 @@ app.add_url_rule('/api/clientes/<int:id>', view_func=actualizar_cliente, methods
 
 # clientes DELETE routes
 app.add_url_rule('/api/clientes/<int:id>', view_func=eliminar_cliente, methods=['DELETE'])
+
+# componentes GET routes
+app.add_url_rule('/api/componentes', view_func=obtener_componentes, methods=['GET'])
+
+# componentes POST routes
+app.add_url_rule('/api/componentes', view_func=agregar_componente, methods=['POST'])
 
 app.config.from_object(Config)
 db.init_app(app)

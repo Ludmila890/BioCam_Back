@@ -1,13 +1,12 @@
-from flask import jsonify
 from models import models
 from sqlalchemy.orm import Session
 from flask_app.utils.utils import hash_password
-from flask_app.models.schemas import GetCliente
+from flask_app.models import schemas
 
 
 def get_clientes(session: Session, skip: int = 0, limit: int = 100) -> list:
     clientes = session.query(models.Cliente).offset(skip).limit(limit).all()
-    cliente_serializado = [GetCliente.model_validate(cliente).model_dump() for cliente in clientes]
+    cliente_serializado = [schemas.GetCliente.model_validate(cliente).model_dump() for cliente in clientes]
 
     return cliente_serializado
 
@@ -26,7 +25,7 @@ def get_cliente_por_nombre(session: Session, nombre: str) -> models.Cliente:
 
 def get_cliente_por_id(session: Session, id: int) -> dict:
     cliente = session.query(models.Cliente).filter(models.Cliente.id == id).first()
-    result = GetCliente.model_validate(cliente).model_dump()
+    result = schemas.GetCliente.model_validate(cliente).model_dump()
 
     return result
 
@@ -56,19 +55,32 @@ def actualizar_cliente(session: Session, id: int, data: dict):
 
 
 def eliminar_cliente(session: Session, id: int):
-    cliente = session.query(models.Cliente).filter(models.Cliente.id==id).first()
+    cliente = session.query(models.Cliente).filter(models.Cliente.id == id).first()
 
     session.delete(cliente)
     session.commit()
 
 
-def get_componentes(session: Session, skip: int = 0, limit: int = 100) -> list[type(models.Componente)]:
-    result = session.query(models.Componente).offset(skip).limit(limit).all()
+# CRUD Componentes
 
-    return result
+def get_componentes(session: Session, skip: int = 0, limit: int = 100) -> list:
+    componentes = session.query(models.Componente).offset(skip).limit(limit).all()
+    componentes_serializados = [schemas.GetComponente.model_validate(componente, from_attributes=True).model_dump() for componente in componentes]
+
+    return componentes_serializados
 
 
 def get_componente_por_id(session: Session, id: int) -> models.Componente:
     result = session.query(models.Componente).filter(models.Componente.id == id).first()
 
     return result
+
+
+def crear_componente(session: Session, nombre: str, precio, stock: int, categoria: str):
+    nuevo_componente = models.Componente(nombre=nombre, precio=precio, stock=stock, categoria=categoria)
+
+    session.add(nuevo_componente)
+    session.commit()
+    session.refresh(nuevo_componente)
+
+    return nuevo_componente

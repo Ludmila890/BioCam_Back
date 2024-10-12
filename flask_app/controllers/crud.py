@@ -1,16 +1,15 @@
+from flask import jsonify
 from models import models
 from sqlalchemy.orm import Session
 from flask_app.utils.utils import hash_password
 from flask_app.models.schemas import GetCliente
 
 
-def get_clientes(session: Session, skip: int = 0, limit: int = 100) -> dict:
+def get_clientes(session: Session, skip: int = 0, limit: int = 100) -> list:
     clientes = session.query(models.Cliente).offset(skip).limit(limit).all()
+    cliente_serializado = [GetCliente.model_validate(cliente).model_dump() for cliente in clientes]
 
-    for cliente in clientes:
-        cliente_serializado = GetCliente.model_validate(cliente).model_dump()
-
-        return cliente_serializado
+    return cliente_serializado
 
 
 def get_cliente_por_email(session: Session, email: str) -> models.Cliente:
@@ -54,6 +53,13 @@ def actualizar_cliente(session: Session, id: int, data: dict):
     session.refresh(cliente)
 
     return cliente
+
+
+def eliminar_cliente(session: Session, id: int):
+    cliente = session.query(models.Cliente).filter(models.Cliente.id==id).first()
+
+    session.delete(cliente)
+    session.commit()
 
 
 def get_componentes(session: Session, skip: int = 0, limit: int = 100) -> list[type(models.Componente)]:

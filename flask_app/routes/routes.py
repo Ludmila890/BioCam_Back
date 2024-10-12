@@ -17,6 +17,12 @@ def agregar_cliente():
     db_session = db.session
     nuevo_cliente = crud.crear_cliente(db_session, data.nombre, data.email, data.clave)
 
+    nuevo_cliente_json = schemas.CrearCliente.model_validate(nuevo_cliente, from_attributes=True)
+
+    nuevo_cliente_dict = nuevo_cliente_json.model_dump()
+
+    return jsonify(nuevo_cliente_dict)
+
 
 def obtener_cliente(id: int):
     db_session = db.session
@@ -25,22 +31,27 @@ def obtener_cliente(id: int):
 
 
 def actualizar_cliente(id: int):
+    # se trae la data de la request y se valida con el schema
     data = schemas.ActualizarCliente(**request.json)
+    # sesion de la db
     db_session = db.session
+    # actualiza el cliente en la db
     cliente_actualizado = crud.actualizar_cliente(db_session, id, data.model_dump(exclude_defaults=True))
+    # convierte modelo sqlalchemy en pydantic schema
+    cliente_json = schemas.GetCliente.model_validate(cliente_actualizado, from_attributes=True)
+    # convierte la instancia de pydantic en diccionario
+    cliente_dict = cliente_json.model_dump()
+
+    # retorna el diccionario que se creo en cliente_dict en formato JSON
+    return jsonify(cliente_dict)
 
 
-# @app.route('/api/clientes/<int:id>', methods=['DELETE'])
-# def eliminar_cliente(id):
-#     cliente = Cliente.query.get(id)
-#     if cliente is None:
-#         return jsonify({'mensaje': 'Cliente no encontrado'}), 404
-#
-#     db.session.delete(cliente)
-#     db.session.commit()
-#     return jsonify({'mensaje': 'Cliente eliminado correctamente'})
-#
-#
+def eliminar_cliente(id: int):
+    db_session = db.session
+    delete_cliente = crud.eliminar_cliente(db_session, id)
+
+    return 'cliente eliminado con éxito'
+
 # # Rutas para Componentes
 # @app.route('/api/componentes', methods=['GET'])
 # def obtener_componentes():

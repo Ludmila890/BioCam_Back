@@ -21,6 +21,8 @@ class CrearCliente(BaseModel):
     email: str
     clave: str
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class ActualizarCliente(BaseModel):
     nombre: str | None = None

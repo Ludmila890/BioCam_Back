@@ -72,12 +72,15 @@ class ActualizarComponente(BaseModel):
     categoria: str | None = None
     fecha_actualizacion: datetime | None = None
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class GetComponente(BaseModel):
     id: int | None
     nombre: str | None
     categoria: str | None
 
+    model_config = ConfigDict(from_attributes=True)
 
 # schemas carrito
 class CarritoBase(BaseModel):

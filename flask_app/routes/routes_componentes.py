@@ -22,41 +22,25 @@ def agregar_componente():
     return jsonify(nuevo_componente_dict)
 
 
-# @app.route('/api/componentes/<int:id>', methods=['GET'])
-# def obtener_componente(id):
-#     componente = Componente.query.get_or_404(id)
-#     return jsonify(componente.to_dict())
-#
-#
-# @app.route('/api/componentes/<int:id>', methods=['PUT'])
-# def actualizar_componente(id):
-#     componente = Componente.query.get(id)
-#     if componente is None:
-#         return jsonify({'mensaje': 'Componente no encontrado'}), 404
-#
-#     datos = request.get_json()
-#     componente.nombre = datos.get('nombre', componente.nombre)
-#     componente.descripcion = datos.get('descripcion', componente.descripcion)
-#     componente.precio = datos.get('precio', componente.precio)
-#     componente.stock = datos.get('stock', componente.stock)
-#     componente.categoria = datos.get('categoria', componente.categoria)
-#
-#     try:
-#         db.session.commit()
-#         return jsonify({'mensaje': 'Componente actualizado correctamente'})
-#     except IntegrityError as e:
-#         db.session.rollback()
-#         return jsonify({'mensaje': 'Error de integridad: ' + str(e)}), 500
-#
-#
-# @app.route('/api/componentes/<int:id>', methods=['DELETE'])
-# def eliminar_componente(id):
-#     componente = Componente.query.get(id)
-#     if componente is None:
-#         return jsonify({'mensaje': 'Componente no encontrado'}), 404
-#
-#     db.session.delete(componente)
-#     db.session.commit()
-#     return jsonify({'mensaje': 'Componente eliminado correctamente'})
-#
-#
+def obtener_componente(id):
+    db_session = db.session
+    componente = crud.get_componente_por_id(db_session, id)
+
+    return componente
+
+
+def actualizar_componente(id):
+    data = schemas.ActualizarComponente(**request.json)
+    db_session = db.session
+    comp_actualizado = crud.actualizar_componente(db_session, id, data.model_dump(exclude_defaults=True))
+    comp_validate = schemas.ActualizarComponente.model_validate(comp_actualizado)
+    result = comp_validate.model_dump()
+
+    return result
+
+
+def eliminar_componente(id):
+    db_session = db.session
+    comp_eliminado = crud.eliminar_componente(db_session, id)
+
+    return 'componente eliminado con éxito'

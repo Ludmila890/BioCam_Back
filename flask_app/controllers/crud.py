@@ -70,8 +70,10 @@ def get_componentes(session: Session, skip: int = 0, limit: int = 100) -> list:
     return componentes_serializados
 
 
-def get_componente_por_id(session: Session, id: int) -> models.Componente:
-    result = session.query(models.Componente).filter(models.Componente.id == id).first()
+def get_componente_por_id(session: Session, id: int) -> dict:
+    componente = session.query(models.Componente).filter(models.Componente.id == id).first()
+    validate = schemas.GetComponente.model_validate(componente)
+    result = validate.model_dump()
 
     return result
 
@@ -84,3 +86,23 @@ def crear_componente(session: Session, nombre: str, precio, stock: int, categori
     session.refresh(nuevo_componente)
 
     return nuevo_componente
+
+
+def actualizar_componente(session: Session, id: int, data: dict):
+    componente = session.query(models.Componente).filter(models.Componente.id == id).first()
+
+    for key, value in data.items():
+        if hasattr(componente, key):
+            setattr(componente, key, value)
+
+    session.commit()
+    session.refresh(componente)
+
+    return componente
+
+
+def eliminar_componente(session: Session, id: int):
+    componente = session.query(models.Componente).filter(models.Componente.id == id).first()
+
+    session.delete(componente)
+    session.commit()

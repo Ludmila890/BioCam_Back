@@ -1,7 +1,21 @@
 from datetime import datetime
 from decimal import Decimal
 from pydantic import BaseModel, ConfigDict
-from models.models import Estado
+from flask_app.models.models import Estado
+
+
+class CarritoBase(BaseModel):
+    id: int
+    cliente_id: int
+    fecha_creacion: datetime
+    fecha_actualizacion: datetime
+    estado: Estado
+
+
+class CrearCarrito(CarritoBase):
+    id: int
+    cliente_id: int
+    estado: Estado
 
 
 # schemas cliente
@@ -14,12 +28,14 @@ class ClienteBase(BaseModel):
     direccion: str | None
     fecha_creacion: datetime
     ultima_actividad: datetime | None
+    carrito: CrearCarrito
 
 
 class CrearCliente(BaseModel):
     nombre: str
     email: str
     clave: str
+    carrito: CrearCarrito
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -34,12 +50,21 @@ class ActualizarCliente(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class GetCarrito(BaseModel):
+    id: int
+    cliente_id: int
+    estado: Estado
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class GetCliente(BaseModel):
     id: int | None
     nombre: str | None
     email: str | None
     telefono: str | None
     direccion: str | None
+    carrito: CrearCarrito | None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -82,19 +107,6 @@ class GetComponente(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-# schemas carrito
-class CarritoBase(BaseModel):
-    id: int
-    cliente_id: int
-    fecha_creacion: datetime
-    fecha_actualizacion: datetime
-    estado: Estado
-    cliente: str
-
-
-class CrearCarrito(CarritoBase):
-    id: int | None
-
 
 class CarritoItemBase(BaseModel):
     id: int
@@ -110,8 +122,10 @@ class ActualizarCarritoItem(BaseModel):
     cantidad: int | None
     fecha_agregado: int | None
 
+    model_config = ConfigDict(from_attributes=True)
 
-class CrearCarritoItem(CarritoItemBase):
+
+class CrearCarritoItem(BaseModel):
     id: int | None
 
 
@@ -120,3 +134,5 @@ class GetCarritoItem(BaseModel):
     carrito_id: int | None
     componente_id: int | None
     cantidad: int | None
+
+    model_config = ConfigDict(from_attributes=True)

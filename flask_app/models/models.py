@@ -1,11 +1,17 @@
 from datetime import datetime
 from flask_app.models.session import db
-from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy import Column, Integer, String
 from decimal import Decimal
 from enum import Enum
 
 
+class Estado(Enum):
+    ABIERTO = 'abierto'
+    CERRADO = 'cerrado'
+    VACIO = 'vacio'
+
+    
 class Cliente(db.Model):
     __tablename__ = 'Clientes'
     id: Mapped[int] = Column(Integer, primary_key=True)
@@ -16,6 +22,7 @@ class Cliente(db.Model):
     direccion: Mapped[str] = Column(String(255))
     fecha_creacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
     ultima_actividad: Mapped[datetime] = Column(db.DateTime)
+    carrito: Mapped['Carrito'] = relationship('Carrito', backref='cliente', uselist=False, cascade='all, delete-orphan')
 
 
 class Componente(db.Model):
@@ -30,12 +37,6 @@ class Componente(db.Model):
     fecha_actualizacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-class Estado(Enum):
-    ABIERTO = 'abierto'
-    CERRADO = 'cerrado'
-    VACIO = 'vacio'
-
-
 class Carrito(db.Model):
     __tablename__ = 'Carritos'
     id: Mapped[int] = Column(Integer, primary_key=True)
@@ -43,7 +44,7 @@ class Carrito(db.Model):
     fecha_creacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
     fecha_actualizacion: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     estado: Mapped[Estado] = Column(db.Enum(Estado), default=Estado.ABIERTO)
-    cliente = db.relationship('Cliente', backref=db.backref('carritos', lazy=True))
+    cantidad_items: Mapped[int] = Column(Integer, default=0)
 
 
 class CarritoItem(db.Model):
@@ -55,3 +56,4 @@ class CarritoItem(db.Model):
     fecha_agregado: Mapped[datetime] = Column(db.DateTime, default=datetime.utcnow)
     carrito = db.relationship('Carrito', backref=db.backref('items', lazy=True))
     componente = db.relationship('Componente', backref=db.backref('carrito_items', lazy=True))
+

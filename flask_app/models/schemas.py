@@ -28,14 +28,14 @@ class ClienteBase(BaseModel):
     direccion: str | None
     fecha_creacion: datetime
     ultima_actividad: datetime | None
-    carrito: CrearCarrito
+    carrito: CrearCarrito | None
 
 
 class CrearCliente(BaseModel):
     nombre: str
     email: str
     clave: str
-    carrito: CrearCarrito
+    carrito: CrearCarrito | None = None
 
     model_config = ConfigDict(from_attributes=True)
 
